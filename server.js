@@ -159,7 +159,8 @@ function buildEvent(appointment, dateKey) {
   const parts = parseTimeParts(appointment.time);
   let dtStartLine, dtEndLine;
   if (parts) {
-    const start = new Date(day.getFullYear(), day.getMonth(), day.getDate(), parts.h, parts.min);
+    // Horário digitado é sempre horário de Brasília (UTC-3, sem horário de verão desde 2019)
+    const start = new Date(Date.UTC(day.getFullYear(), day.getMonth(), day.getDate(), parts.h + 3, parts.min));
     const end = new Date(start.getTime() + 60 * 60 * 1000);
     dtStartLine = `DTSTART:${icsDateStamp(start)}`;
     dtEndLine = `DTEND:${icsDateStamp(end)}`;
