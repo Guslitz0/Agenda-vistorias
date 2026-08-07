@@ -190,8 +190,9 @@ function buildEvent(appointment, dateKey) {
     .join("\r\n");
 }
 
-app.get("/agenda/:token.ics", (req, res) => {
-  if (req.params.token !== CALENDAR_TOKEN) {
+app.get("/agenda/:tokenFile", (req, res) => {
+  const token = req.params.tokenFile.replace(/\.ics$/i, "");
+  if (token !== CALENDAR_TOKEN) {
     return res.status(403).send("Token inválido");
   }
   const data = readData();
